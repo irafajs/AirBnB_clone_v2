@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 #script to install, configure nginx and create some dir
 
+sudo apt-get -y update
+sudo apt-get -y upgrade
 if ! command -v nginx &> /dev/null; then
-    apt-get -y update
-    apt-get -y install nginx
-    apt ufw allow 'nginx HTTP'
+    sudo apt-get -y install nginx
 fi
+ufw allow 'nginx HTTP'
 mkdir -p /data/web_static/releases/test
 mkdir -p /data/web_static/shared
 mkdir -p /data/web_static/current
@@ -18,5 +19,7 @@ echo "<html>
 </html>" >  /data/web_static/releases/test/index.html
 ln -sf /data/web_static/releases/test /data/web_static/current
 chown -R ubuntu:ubuntu /data/
-sudo sed -i '/listen 80 default_server/a location /hbnb_static { alias /data/web_static/current/;}' /etc/nginx/sites-enabled/default
+def_file=/etc/nginx/sites-enabled/default
+serve_page="location /hbnb_static {\n\t alias /data/web_static/current/;\n\t}"
+sudo sed -i "24i $serve_page" $def_file
 service nginx restart
