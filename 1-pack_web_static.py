@@ -14,11 +14,11 @@ def do_pack():
 
     local("mkdir -p versions")
 
-    archive_name = "web_static_{}.tgz".format(datetime.now().strftime("%Y%m%d%H%M%S"))
+    a_nme = "web_static_{}.tgz".format(datetime.now().strftime("%Y%m%d%H%M%S"))
 
-    result = local("tar -cvzf versions/{} web_static".format(archive_name), capture=True)
+    result = local("tar -cvzf versions/{} web_static".format(a_nme))
 
     if result.succeeded:
-        return os.path.join("versions", archive_name)
+        return os.path.join("versions", a_nme)
     else:
         return None
