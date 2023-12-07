@@ -8,10 +8,10 @@ from fabric.api import env, put, run, local
 from os.path import exists
 
 
-
 env.hosts = ['100.25.134.107', '35.153.51.30']
 env.user = 'ubuntu'
 env.key_filename = '/home/vagrant/.ssh/school'
+
 
 def do_deploy(archive_path):
     """Distrubute the archives to my server"""
@@ -22,8 +22,8 @@ def do_deploy(archive_path):
     try:
         put(archive_path, '/tmp/')
 
-        archive_filename = archive_path.split("/")[-1]
-        release_folder = '/data/web_static/releases/' + archive_filename.split(".")[0]
+        a_fnme = archive_path.split("/")[-1]
+        release_folder = '/data/web_static/releases/' + a_fnme.split(".")[0]
         run('mkdir -p {}'.format(release_folder))
         run('tar -xzf /tmp/{} -C {}'.format(archive_filename, release_folder))
 
@@ -40,11 +40,11 @@ def do_deploy(archive_path):
         print("Deployment failed:", e)
         return False
 
+
 if __name__ == "__main__":
     archive_path = local('python 1-pack_web_static.py', capture=True)
-    
+
     if archive_path:
         do_deploy(archive_path.strip())
     else:
         print("Error: Archive creation failed.")
-
