@@ -17,7 +17,7 @@ echo "<html>
 		Holberton School
 	</body>
 </html>" >  /data/web_static/releases/test/index.html
-ln -sf /data/web_static/releases/test /data/web_static/current
+sudo ln -s -f /data/web_static/releases/test /data/web_static/current
 chown -R ubuntu:ubuntu /data/
 def_file=/etc/nginx/sites-enabled/default
 serve_page="location /hbnb_static {\n\t alias /data/web_static/current/;\n\t}"

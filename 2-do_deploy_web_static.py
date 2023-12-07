@@ -25,14 +25,12 @@ def do_deploy(archive_path):
         a_fnme = archive_path.split("/")[-1]
         release_folder = '/data/web_static/releases/' + a_fnme.split(".")[0]
         run('mkdir -p {}'.format(release_folder))
-        run('tar -xzf /tmp/{} -C {}'.format(archive_filename, release_folder))
-
-        run('rm -rf /tmp/{}'.format(archive_filename))
-
+        run('tar -xzf /tmp/{} -C {}'.format(a_fnme, release_folder))
+        run('rm -rf /tmp/{}'.format(a_fnme))
+        run('mv {}/web_static/*'.format(release_folder))
+        run('rm -rf {}/web_static'.format(release_folder))
         run('rm -rf /data/web_static/current')
-
         run('ln -s {} /data/web_static/current'.format(release_folder))
-
         print("New version deployed!")
         return True
 
