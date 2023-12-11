@@ -1,24 +1,19 @@
 #!/usr/bin/python3
-"""
-Shebang to make python script
-"""
-
-
 from fabric.api import local
-from datetime import datetime
-import os
+from time import strftime
+from datetime import date
 
 
 def do_pack():
-    """method to archive all content of dir webstatic"""
+    """a Fabric script that generates a .tgz archive"""
 
-    local("mkdir -p versions")
+    filename = strftime("%Y%m%d%H%M%S")
+    try:
+        local("mkdir -p versions")
+        local("tar -czvf versions/web_static_{}.tgz web_static/"
+              .format(filename))
 
-    a_nme = "web_static_{}.tgz".format(datetime.now().strftime("%Y%m%d%H%M%S"))
+        return "versions/web_static_{}.tgz".format(filename)
 
-    result = local("tar -cvzf versions/{} web_static".format(a_nme))
-
-    if result.succeeded:
-        return os.path.join("versions", a_nme)
-    else:
+    except Exception as e:
         return None
