@@ -19,6 +19,7 @@ def hbnb():
     """function to print HBNB at location /"""
     return 'HBNB'
 
+
 @app.route('/c/<text>', strict_slashes=False)
 def c_text(text):
     """print text at c location plus passed argumenr /"""
