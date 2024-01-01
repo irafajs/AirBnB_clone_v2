@@ -22,3 +22,9 @@ class State(BaseModel, Base):
             if city.state_id == self.id:
                 city_list.append(city)
         return city_list
+
+    def __str__(self):
+        """overwritting the inherited __str__"""
+        state_dict = self.to_dict()
+        state_dict.pop('__class__', None)
+        return "[State] ({}) {}".format(self.id, state_dict)
